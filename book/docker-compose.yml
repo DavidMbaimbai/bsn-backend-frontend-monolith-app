@@ -3,14 +3,14 @@ services:
     container_name: mysql-sql-bsn
     image: mysql
     environment:
-      MYSQL_USER:root
-      MYSQL_PASSWORD:root
-      MYSQL_DATA:var/lib/mysql/data
-      MYSQL_DB:book_social_bsn
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATA: /var/lib/mysql/data
+      MYSQL_DATABASE: book_social_bsn
     volumes:
       - mysql:/data/mysql
     ports:
-      - 5432:5432
+      - 3307:3306  # Changed port to 3307:3306
     networks:
       - spring-projects
     restart: unless-stopped

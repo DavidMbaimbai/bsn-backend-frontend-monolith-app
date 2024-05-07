@@ -8,5 +8,5 @@ springdoc:
   default-consumes-media-type: application/json
 server:
   servlet:
-    context-path: /apa/v1/
+    context-path: /api/v1/
 
