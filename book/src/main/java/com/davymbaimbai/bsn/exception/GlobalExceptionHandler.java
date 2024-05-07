@@ -51,7 +51,7 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(MessagingException.class)
     public ResponseEntity<ExceptionResponse> handleException(MessagingException exp){
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse
                         .builder()
                         .error(exp.getMessage())
@@ -70,6 +70,16 @@ public class GlobalExceptionHandler {
                 .body(ExceptionResponse
                         .builder()
                         .validationErrors(errors)
+                        .build());
+    }
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ExceptionResponse> handleException(Exception exp){
+        exp.printStackTrace();
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(ExceptionResponse
+                        .builder()
+                        .businessErrorDescription("Internal error, contact admin")
+                        .error(exp.getMessage())
                         .build());
     }
 }
