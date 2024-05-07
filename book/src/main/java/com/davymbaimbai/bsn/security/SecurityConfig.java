@@ -31,8 +31,8 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.cors(withDefaults())
-        .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests(req->
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(req ->
                         req.requestMatchers("/auth/**",
                                         "v2/api-docs",
                                         "v3/api-docs",
@@ -41,7 +41,7 @@ public class SecurityConfig {
                                         "/swagger-resources/**",
                                         "/configuration/ui",
                                         "/configuration/security"
-                                        ,"/swagger-ui/**",
+                                        , "/swagger-ui/**",
                                         "/webjars/**",
                                         "/swagger-ui.html")
                                 .permitAll()

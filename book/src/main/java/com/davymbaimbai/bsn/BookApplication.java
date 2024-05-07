@@ -19,9 +19,9 @@ public class BookApplication {
     }
 
     @Bean
-    public CommandLineRunner runner(RoleRepository roleRepository){
+    public CommandLineRunner runner(RoleRepository roleRepository) {
         return args -> {
-            if (roleRepository.findByName("USER").isEmpty()){
+            if (roleRepository.findByName("USER").isEmpty()) {
                 roleRepository.save(Role
                         .builder()
                         .name("USER")

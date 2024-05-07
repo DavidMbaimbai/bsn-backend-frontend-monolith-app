@@ -19,18 +19,18 @@ import java.util.Set;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(LockedException.class)
-    public ResponseEntity<ExceptionResponse> handleException(LockedException exp){
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-            .body(ExceptionResponse
-                    .builder()
-                    .businessErrorCode(BusinessErrorCode.ACCOUNT_LOCKED.getCode())
-                    .businessErrorDescription(BusinessErrorCode.ACCOUNT_LOCKED.getDescription())
-                    .error(exp.getMessage())
-                    .build());
+    public ResponseEntity<ExceptionResponse> handleException(LockedException exp) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                .body(ExceptionResponse
+                        .builder()
+                        .businessErrorCode(BusinessErrorCode.ACCOUNT_LOCKED.getCode())
+                        .businessErrorDescription(BusinessErrorCode.ACCOUNT_LOCKED.getDescription())
+                        .error(exp.getMessage())
+                        .build());
     }
 
     @ExceptionHandler(DisabledException.class)
-    public ResponseEntity<ExceptionResponse> handleException(DisabledException exp){
+    public ResponseEntity<ExceptionResponse> handleException(DisabledException exp) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ExceptionResponse
                         .builder()
@@ -39,8 +39,9 @@ public class GlobalExceptionHandler {
                         .error(exp.getMessage())
                         .build());
     }
+
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exp){
+    public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException exp) {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(ExceptionResponse
                         .builder()
@@ -49,8 +50,9 @@ public class GlobalExceptionHandler {
                         .error(BusinessErrorCode.BAD_CREDENTIAL.getDescription())
                         .build());
     }
+
     @ExceptionHandler(MessagingException.class)
-    public ResponseEntity<ExceptionResponse> handleException(MessagingException exp){
+    public ResponseEntity<ExceptionResponse> handleException(MessagingException exp) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse
                         .builder()
@@ -59,10 +61,10 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exp){
+    public ResponseEntity<ExceptionResponse> handleException(MethodArgumentNotValidException exp) {
         Set<String> errors = new HashSet<>();
         exp.getBindingResult().getAllErrors()
-                .forEach(error-> {
+                .forEach(error -> {
                     var errorMessage = error.getDefaultMessage();
                     errors.add(errorMessage);
                 });
@@ -72,8 +74,9 @@ public class GlobalExceptionHandler {
                         .validationErrors(errors)
                         .build());
     }
+
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<ExceptionResponse> handleException(Exception exp){
+    public ResponseEntity<ExceptionResponse> handleException(Exception exp) {
         exp.printStackTrace();
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(ExceptionResponse

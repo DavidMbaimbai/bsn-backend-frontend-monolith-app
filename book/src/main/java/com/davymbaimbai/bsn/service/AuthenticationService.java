@@ -27,7 +27,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-    private final RoleRepository  roleRepository;
+    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
@@ -36,9 +36,10 @@ public class AuthenticationService {
     private final JwtService jwtService;
     @Value("${application.mailing.frontend.activation-url}")
     private String activationUrl;
+
     public void register(RegistrationRequest request) throws MessagingException {
-        var userRole  = roleRepository.findByName("USER")
-                .orElseThrow(()-> new IllegalStateException("ROLE USER was not initialized"));
+        var userRole = roleRepository.findByName("USER")
+                .orElseThrow(() -> new IllegalStateException("ROLE USER was not initialized"));
         var user = User.builder()
                 .firstName(request.getFirstName())
                 .lastName(request.getLastName())
@@ -82,7 +83,7 @@ public class AuthenticationService {
         String characters = "0123456789";
         StringBuilder codeBuilder = new StringBuilder();
         SecureRandom secureRandom = new SecureRandom();
-        for (int i = 0; i< length; i++){
+        for (int i = 0; i < length; i++) {
             int randomIndex = secureRandom.nextInt(characters.length());
             codeBuilder.append(characters.charAt(randomIndex));
         }
@@ -93,22 +94,22 @@ public class AuthenticationService {
         var auth = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         var claims = new HashMap<String, Object>();
-        var user = ((User)auth.getPrincipal());
+        var user = ((User) auth.getPrincipal());
         claims.put("fullName", user.fullName());
         var jwtToken = jwtService.generateToken(claims, user);
         return AuthenticationResponse.builder()
                 .token(jwtToken).build();
     }
 
-    public void activateAccount(String token) throws  MessagingException{
+    public void activateAccount(String token) throws MessagingException {
         Token tokenSaved = tokenRepository.findByToken(token)
-                .orElseThrow(()-> new RuntimeException(" Invalid Token"));
-        if (LocalDateTime.now().isAfter(tokenSaved.getExpiresAt())){
-           sendValidationEmail(tokenSaved.getUser());
-           throw new RuntimeException("Activation token has expired. A new token has been send to the same email address");
+                .orElseThrow(() -> new RuntimeException(" Invalid Token"));
+        if (LocalDateTime.now().isAfter(tokenSaved.getExpiresAt())) {
+            sendValidationEmail(tokenSaved.getUser());
+            throw new RuntimeException("Activation token has expired. A new token has been send to the same email address");
         }
         var user = userRepository.findById(tokenSaved.getUser().getId())
-                .orElseThrow(()-> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("User not found"));
         user.setEnabled(true);
         userRepository.save(user);
         tokenSaved.setValidatedAt(LocalDateTime.now());
