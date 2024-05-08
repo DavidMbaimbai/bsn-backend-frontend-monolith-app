@@ -1,6 +1,5 @@
 package com.davymbaimbai.bsn.entity;
 
-import com.davymbaimbai.bsn.entity.Role;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -42,7 +41,7 @@ public class User implements UserDetails , Principal {
     @OneToMany(mappedBy = "owner")
     private List<Book> books;
     @OneToMany(mappedBy = "user")
-    private List<BookTransaction> histories;
+    private List<BookTransactionHistory> histories;
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdDate;
