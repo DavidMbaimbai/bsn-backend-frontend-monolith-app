@@ -43,7 +43,7 @@ public class FeedBackService {
         return feedRepository.save(feedBack).getId();
     }
 
-    public PageResponse<FeedBackResponse> findAllFeedBackByBooks(Integer bookId, int page, int size, Authentication connectedUser) {
+    public PageResponse<FeedBackResponse> findAllFeedBackByBook(Integer bookId, int page, int size, Authentication connectedUser) {
         Pageable pageable = PageRequest.of(page, size);
         User user = (User) connectedUser.getPrincipal();
         Page<FeedBack> feedBack = feedRepository.findAllByBookId(bookId, pageable);

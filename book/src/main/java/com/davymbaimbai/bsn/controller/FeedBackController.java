@@ -25,12 +25,12 @@ public class FeedBackController {
         return ResponseEntity.ok(feedBackService.save(feedBackRequest, connectedUser));
     }
     @GetMapping("/book/{book_id}")
-    public ResponseEntity<PageResponse<FeedBackResponse>> findAllFeedBackByBooks(
+    public ResponseEntity<PageResponse<FeedBackResponse>> findAllFeedBackByBook(
             @PathVariable("book_id") Integer bookId,
             @RequestParam(name = "page", defaultValue = "0", required = false) int page,
             @RequestParam(name = "size", defaultValue = "10", required = false) int size,
             Authentication connectedUser) {
-        return ResponseEntity.ok(feedBackService.findAllFeedBackByBooks(bookId,page,size,connectedUser));
+        return ResponseEntity.ok(feedBackService.findAllFeedBackByBook(bookId,page,size,connectedUser));
     }
 
 }
