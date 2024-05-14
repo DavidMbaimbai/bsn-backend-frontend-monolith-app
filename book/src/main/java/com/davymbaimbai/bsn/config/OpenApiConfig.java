@@ -12,17 +12,16 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @OpenAPIDefinition(
         info = @Info(
-                contact=@Contact(
+                contact = @Contact(
                         name = "David Mbaimbai",
                         email = "davymbaimbai@gmail.com",
-                        url = "https://immenselibrary.com"
-
+                        url = "https://davidm.com"
                 ),
-                description = "OpenApi documentation for Immense Library",
-                title = "OpenApi specification",
+                description = "OpenApi documentation for Spring Security",
+                title = "OpenApi specification - David Mbaimbai",
                 version = "1.0",
                 license = @License(
-                        name = "License name",
+                        name = "Licence name",
                         url = "https://some-url.com"
                 ),
                 termsOfService = "Terms of service"
@@ -34,16 +33,17 @@ import io.swagger.v3.oas.annotations.servers.Server;
                 ),
                 @Server(
                         description = "PROD ENV",
-                        url = "https://davidm.com/library"
+                        url = "https://davidm.com"
                 )
         },
-        security = @SecurityRequirement(
-                name= "bearAuth"
-
-        )
+        security = {
+                @SecurityRequirement(
+                        name = "bearerAuth"
+                )
+        }
 )
 @SecurityScheme(
-        name= "bearAuth",
+        name = "bearerAuth",
         description = "JWT auth description",
         scheme = "bearer",
         type = SecuritySchemeType.HTTP,
